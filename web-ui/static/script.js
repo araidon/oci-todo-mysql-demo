@@ -11,7 +11,7 @@ document.getElementById('todoForm').addEventListener('submit', async function(e)
     if (!title) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/todos`, {
+        const response = await fetch(`${API_BASE_URL}/api/todos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: title })
@@ -32,7 +32,7 @@ document.getElementById('todoForm').addEventListener('submit', async function(e)
 // TODOリストの読み込み
 async function loadTodos() {
     try {
-        const response = await fetch(`${API_BASE_URL}/todos`);
+        const response = await fetch(`${API_BASE_URL}/api/todos`);
         const todos = await response.json();
         displayTodos(todos);
     } catch (error) {
@@ -64,7 +64,7 @@ function displayTodos(todos) {
 // TODOの完了/未完了切り替え
 async function toggleTodo(id, currentDone) {
     try {
-        const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
+        const response = await fetch(`${API_BASE_URL}/api/todos/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ done: currentDone ? 0 : 1 })
@@ -86,7 +86,7 @@ async function deleteTodo(id) {
     if (!confirm('このタスクを削除しますか？')) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
+        const response = await fetch(`${API_BASE_URL}/api/todos/${id}`, {
             method: 'DELETE'
         });
 
