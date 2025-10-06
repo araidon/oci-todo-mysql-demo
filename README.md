@@ -47,18 +47,3 @@ docker run --rm -p 8000:8000 \
 
 - ブラウザ: `http://localhost:8000`
 - ヘルスチェック: `http://localhost:8000/health`
-
-## GitHub への公開手順（例）
-```bash
-git init
-
-git add .
-
-git commit -m "Add OKE-ready TODO app"
-
-git branch -M main
-
-git remote add origin git@github.com:<your-account>/oci-todo-mysql-demo.git
-
-git push -u origin main
-```
