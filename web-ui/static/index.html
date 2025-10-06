@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO管理アプリ - OCI コンテナ環境</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>📝 TODO管理アプリ</h1>
+        <p>OCI 上のコンテナ環境（OKE 等）+ MySQL HeatWave で構築</p>
+    </div>
+
+    <div class="todo-form">
+        <form id="todoForm">
+            <input type="text" id="todoTitle" placeholder="新しいタスクを入力してください..." required>
+            <button type="submit">追加</button>
+        </form>
+    </div>
+
+    <div id="message"></div>
+
+    <div id="todos">
+        <h2>タスク一覧</h2>
+        <div id="todoList">
+            <!-- TODOリストがここに動的に挿入されます -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
