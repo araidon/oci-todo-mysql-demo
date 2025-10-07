@@ -44,7 +44,7 @@ def execute_query(query, params=None, fetch=False):
 def health_check():
     return jsonify({'status': 'healthy', 'service': 'TODO API Server'}), 200
 
-@app.route('/api/todos', methods=['GET'])
+@app.route('/todos', methods=['GET'])
 def get_todos():
     try:
         todos = execute_query("SELECT * FROM todos ORDER BY created_at DESC", fetch=True)
@@ -52,7 +52,7 @@ def get_todos():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/todos', methods=['POST'])
+@app.route('/todos', methods=['POST'])
 def create_todo():
     try:
         data = request.get_json()
@@ -66,7 +66,7 @@ def create_todo():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/todos/<int:todo_id>', methods=['PUT'])
+@app.route('/todos/<int:todo_id>', methods=['PUT'])
 def update_todo(todo_id):
     try:
         data = request.get_json()
@@ -78,7 +78,7 @@ def update_todo(todo_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/todos/<int:todo_id>', methods=['DELETE'])
+@app.route('/todos/<int:todo_id>', methods=['DELETE'])
 def delete_todo(todo_id):
     try:
         execute_query("DELETE FROM todos WHERE id = %s", (todo_id,))
