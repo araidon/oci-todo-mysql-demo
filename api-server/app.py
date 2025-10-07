@@ -50,7 +50,10 @@ def get_todos():
         todos = execute_query("SELECT * FROM todos ORDER BY created_at DESC", fetch=True)
         return jsonify(todos)
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import traceback
+        error_detail = traceback.format_exc()
+        print(f"Error in get_todos: {error_detail}")
+        return jsonify({'error': str(e), 'detail': error_detail}), 500
 
 @app.route('/todos', methods=['POST'])
 def create_todo():
