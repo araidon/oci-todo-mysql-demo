@@ -1,6 +1,6 @@
 # Container Instancesでの構築手順 - コマンド集
 
-本書「05-container-arai.re」のContainer Instancesセクションで使用するコマンドをまとめたファイルです。
+「第4章 コンテナアーキテクチャパターン」のContainer Instancesセクションで使用するコマンドをまとめたファイルです。
 各セクションに対応するコマンドを順番に実行してください。
 
 ## 使用方法
