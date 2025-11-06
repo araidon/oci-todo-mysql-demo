@@ -12,10 +12,13 @@ OCI 上の Kubernetes(OKE) や任意のコンテナ環境で動作する、シ�
 
 ## 構成
 ```
-container-api/
+oci-todo-mysql-demo/
+├── README.md
 ├── Dockerfile
 ├── requirements.txt
-└── app.py
+├── app.py
+├── commands-container-instances.md  # Container Instances構築用コマンド集
+└── commands-oke.md                  # OKE構築用コマンド集
 ```
 
 ## 事前準備（DB）
@@ -50,3 +53,12 @@ docker run --rm -p 8000:8000 \
 
 - ブラウザ: `http://localhost:8000`
 - ヘルスチェック: `http://localhost:8000/health`
+
+## 構築手順コマンド集
+
+本書「05-container-arai.re」で使用するコマンドをまとめたファイルです：
+
+- **Container Instances用**: `commands-container-instances.md` - Container Instancesでの構築手順用コマンド集
+- **OKE用**: `commands-oke.md` - OKE（OCI Kubernetes Engine）での構築手順用コマンド集
+
+各ファイルには、構築時に実行するコマンドがセクションごとに整理されています。必要な値を置き換えて（`<xxx>`の部分）、順番に実行してください。
