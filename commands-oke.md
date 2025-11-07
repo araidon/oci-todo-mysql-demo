@@ -206,30 +206,17 @@ kubectl create secret docker-registry ocir-secret \
 
 書籍: `== OKE（OCI Kubernetes Engine）での構築手順 > === Kubernetesリソースのデプロイ > ==== ■3. アプリケーション用のSecret/ConfigMapの作成`
 
-ファイル名: `secret-configmap.yaml`
+サンプルリポジトリに含まれている`secret-configmap.yaml`を使用して、SecretとConfigMapを作成します。
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: app-db-secret
-  namespace: default
-type: Opaque
-stringData:
-  DB_PASSWORD: "<appuser_password>"  # MySQLで作成したappuserのパスワード
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: app-config
-  namespace: default
-data:
-  DB_HOST: "demo-mysql.dbsubnetprivate.demookecluster.oraclevcn.com"
-  DB_USER: "appuser"
-  DB_NAME: "sampledb"
-```
+**注意**: `secret-configmap.yaml`ファイル内の`<appuser_password>`を、設定したMySQLユーザー`appuser`のパスワードに置き換えてください。
 
 ```bash
+# リポジトリディレクトリに移動
+cd ~/oci-todo-mysql-demo
+
+# secret-configmap.yamlのDB_PASSWORDを編集
+vi secret-configmap.yaml  # <appuser_password>を実際のパスワードに置き換え
+
 # Secret/ConfigMapの適用
 kubectl apply -f secret-configmap.yaml
 ```
@@ -238,68 +225,14 @@ kubectl apply -f secret-configmap.yaml
 
 書籍: `== OKE（OCI Kubernetes Engine）での構築手順 > === Kubernetesリソースのデプロイ > ==== ■4. Deploymentの作成`
 
-ファイル名: `deployment.yaml`
+サンプルリポジトリに含まれている`deployment.yaml`を使用して、Deploymentを作成します。
 
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: container-api
-  namespace: default
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: container-api
-  template:
-    metadata:
-      labels:
-        app: container-api
-    spec:
-      imagePullSecrets:
-        - name: ocir-secret
-      containers:
-        - name: api
-          image: <region-key>.ocir.io/<tenancy-namespace>/container-api:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8000
-          env:
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: DB_HOST
-            - name: DB_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: DB_USER
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: DB_NAME
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-db-secret
-                  key: DB_PASSWORD
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 15
-            periodSeconds: 20
-```
+**注意**: `deployment.yaml`ファイル内の`<region-key>`と`<tenancy-namespace>`を、実際の値に置き換えてください。
 
 ```bash
+# deployment.yamlのイメージ名を編集
+vi deployment.yaml  # <region-key>と<tenancy-namespace>を実際の値に置き換え
+
 # Deploymentの適用
 kubectl apply -f deployment.yaml
 ```
@@ -308,25 +241,7 @@ kubectl apply -f deployment.yaml
 
 書籍: `== OKE（OCI Kubernetes Engine）での構築手順 > === Kubernetesリソースのデプロイ > ==== ■5. ServiceのNodePort公開`
 
-ファイル名: `service.yaml`
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: container-api-svc
-  namespace: default
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 80
-      targetPort: 8000
-      protocol: TCP
-      nodePort: 30080
-  selector:
-    app: container-api
-```
+サンプルリポジトリに含まれている`service.yaml`を使用して、Serviceを作成します。
 
 ```bash
 # Serviceの適用

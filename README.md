@@ -17,6 +17,9 @@ oci-todo-mysql-demo/
 ├── Dockerfile
 ├── requirements.txt
 ├── app.py
+├── secret-configmap.yaml            # Kubernetes用Secret/ConfigMap定義（OKE用）
+├── deployment.yaml                   # Kubernetes用Deployment定義（OKE用）
+├── service.yaml                      # Kubernetes用Service定義（OKE用）
 ├── commands-container-instances.md  # Container Instances構築用コマンド集
 └── commands-oke.md                  # OKE構築用コマンド集
 ```
